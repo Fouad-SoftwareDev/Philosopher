@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 15:45:08 by fdahouk           #+#    #+#             */
-/*   Updated: 2024/12/24 23:11:19 by marvin           ###   ########.fr       */
+/*   Updated: 2025/01/07 18:38:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	destroy_mutex(t_myenv *env)
 		pthread_mutex_destroy(&env->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&env->writingM);
+	pthread_mutex_destroy(&env->writing_m);
+	pthread_mutex_destroy(&env->meal_m);
+	pthread_mutex_destroy(&env->death_m);
 }
 
 int	check_arg_validity(char	**argv, int argc, t_myenv *myenv)
@@ -73,12 +75,44 @@ int	check_arg_validity(char	**argv, int argc, t_myenv *myenv)
 		myenv->max_timestoeat = -1;
 	if (myenv->philocount < 1 || myenv->time_to_die < 0
 		|| myenv->time_to_eat < 0
-		|| myenv->time_to_sleep < 0 || (ft_atoi(argv[5]) <= 0) && argc == 6)
+		|| myenv->time_to_sleep < 0
+		|| ((myenv->max_timestoeat <= 0) && argc == 6))
 		return (1);
 	return (0);
 }
 
 void	*handler(void *arg)
 {
-	// the main thread function to write
+	t_philo	*ph;
+
+	ph = (t_philo *)arg;
+	while (1)
+	{
+		if (someone_died(ph))
+			break;
+		take_forks(ph);
+		eat(ph);
+		sleeping(ph);
+		thinking(ph);
+	}
+	return (NULL);
+}
+
+void	take_forks(t_philo *ph)
+{
+	if (ph->philo_id % 2 == 0)
+	{
+		pthread_mutex_lock(&ph->env->forks[ph->forkone]);
+		custom_print(" has taken a fork", ph);
+		pthread_mutex_lock(&ph->env->forks[ph->forktwo]);
+		custom_print(" has taken a fork", ph);
+	}
+	else
+	{
+		usleep(100);
+		pthread_mutex_lock(&ph->env->forks[ph->forktwo]);
+		custom_print(" has taken a fork", ph);
+		pthread_mutex_lock(&ph->env->forks[ph->forkone]);
+		custom_print(" has taken a fork", ph);
+	}
 }

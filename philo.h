@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:35:31 by fdahouk           #+#    #+#             */
-/*   Updated: 2024/12/24 23:13:16 by marvin           ###   ########.fr       */
+/*   Updated: 2025/01/06 02:03:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_philo
 	int				forktwo;
 	int				eatcount;
 	unsigned long	last_meal_time;
-	struct s_env	*env;
+	struct s_myenv	*env;
 	pthread_t		t_id;
 }	t_philo;
 
@@ -37,20 +37,36 @@ typedef struct s_myenv
 	int					time_to_sleep;
 	int					time_to_eat;
 	int					time_to_die;
-	t_philo				*philos;
+	int					stop_death;
+	int					stop_eating;
+	t_philo				*ph;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		writing_m;
+	pthread_mutex_t		meal_m;
+	pthread_mutex_t		death_m;
 	unsigned long		start_time;
 }	t_myenv;
 
 int					ft_atoi(char *nptr);
 int					check_arg_validity(char	**argv, int argc, t_myenv *myenv);
 int					init_mutex(t_myenv *env);
-int					init_philoshers(t_myenv *env, t_philo *philo, int pos);
 int					init_env(t_myenv *env);
-init				init_threads(t_philo *philo);
+int					init_threadsallthreads(t_myenv *env);
+int					check_philosopher(t_philo *ph);
+int					check_eatcount(t_myenv *env);
+int					someone_died(t_philo *ph);
 void				*handler(void *arg);
-void				custom_print(char *msg, t_philo *philo, t_myenv *env);
+void				*handler1(void *arg);
+void				monitor_death(t_myenv *env);
+void				init_philoshers(t_myenv *env, t_philo *philo, int pos);
+void				custom_print(char *msg, t_philo *philo);
+void				clean_memory(t_myenv *env);
+void				destroy_mutex(t_myenv *env);
+void				eat(t_philo *philo);
+void				sleeping(t_philo *philo);
+void				thinking(t_philo *ph);
+void				take_forks(t_philo *philo);
+void				join_all_thread(t_myenv *env);
 unsigned long		get_time_in_ms(void);
 
 #endif
