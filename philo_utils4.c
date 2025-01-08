@@ -53,3 +53,4 @@ int	onlynumber(char *s)
 	}
 	return (0);
 }
+git commit -m "final touch print in red for death green for survival"
