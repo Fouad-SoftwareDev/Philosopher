@@ -27,7 +27,6 @@ void	*handler1(void *arg)
 
 void	clean_memory(t_myenv *env)
 {
-
 	destroy_mutex(env);
 	if (env->forks)
 		free(env->forks);
@@ -61,7 +60,7 @@ void	monitor_death(t_myenv *env)
 {
 	int	i;
 
-	while(1)
+	while (1)
 	{
 		i = 0;
 		if (env->philocount == 1)
@@ -90,7 +89,7 @@ int	check_philosopher(t_philo *ph)
 		{
 			pthread_mutex_lock(&ph->env->death_m);
 			time = (get_time_in_ms() - ph->env->start_time);
-			printf("%lu  %d has died \n", time, ph->philo_id);
+			printf("\033[1;31m%lu  %d has died\033[0m \n", time, ph->philo_id);
 			ph->env->stop_death = 1;
 			pthread_mutex_unlock(&ph->env->death_m);
 			pthread_mutex_unlock(&ph->env->meal_m);
@@ -99,10 +98,4 @@ int	check_philosopher(t_philo *ph)
 	}
 	pthread_mutex_unlock(&ph->env->meal_m);
 	return (0);
-}
-
-void	sleeping(t_philo *philo)
-{
-	custom_print(" is sleeping", philo);
-	usleep((philo->env->time_to_sleep)* 1000);
 }

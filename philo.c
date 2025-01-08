@@ -35,7 +35,7 @@ int	main(int argc, char	**argv)
 			monitor_death(&myenv);
 			join_all_thread(&myenv);
 			if (myenv.stop_eating)
-				printf("No one died all philosopher were able to eat \n");
+				printf("\033[1;32mNo Philospher Died!!\033[0m\n");
 		}
 	}
 	return (0);

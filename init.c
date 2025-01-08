@@ -78,15 +78,16 @@ void	custom_print(char *msg, t_philo *ph)
 	unsigned long	time;
 
 	if (someone_died(ph))
-			return ;
+		return ;
 	if (!ph->env->stop_death)
-	{	
+	{
 		pthread_mutex_lock(&ph->env->writing_m);
 		time = (get_time_in_ms() - ph->env->start_time);
 		printf("%lu  %d%s\n", time, ph->philo_id, msg);
 		pthread_mutex_unlock(&ph->env->writing_m);
 	}
 }
+
 int	init_threadsallthreads(t_myenv *e)
 {
 	int	i;

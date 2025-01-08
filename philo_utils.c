@@ -20,34 +20,6 @@ unsigned long	get_time_in_ms(void)
 	return ((unsigned long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
-int	ft_atoi(char *nptr)
-{
-	int	count;
-	int	sign;
-	int	i;
-	int	res;
-
-	res = 0;
-	count = 0;
-	i = 0;
-	sign = 1;
-	while (nptr[i] != '\0' && (nptr[i] == ' '
-			|| (nptr[i] >= 9 && nptr[i] <= 13)))
-		i++;
-	while (nptr[i] != '\0' && (nptr[i] == '-' || nptr[i] == '+'))
-	{
-		if (nptr[i] == '-')
-			sign = sign * -1;
-		count++;
-		if (count == 2)
-			return (res);
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-		res = res * 10 + (nptr[i++] - '0');
-	return (res * sign);
-}
-
 void	destroy_mutex(t_myenv *env)
 {
 	int	i;
@@ -65,6 +37,15 @@ void	destroy_mutex(t_myenv *env)
 
 int	check_arg_validity(char	**argv, int argc, t_myenv *myenv)
 {
+	int	i;
+
+	i = 1;
+	while (i <= 6)
+	{
+		if (onlynumber(argv[i]) == 1)
+			return (1);
+		i++;
+	}
 	myenv->philocount = ft_atoi(argv[1]);
 	myenv->time_to_die = ft_atoi(argv[2]);
 	myenv->time_to_eat = ft_atoi(argv[3]);
@@ -73,9 +54,9 @@ int	check_arg_validity(char	**argv, int argc, t_myenv *myenv)
 		myenv->max_timestoeat = ft_atoi(argv[5]);
 	else
 		myenv->max_timestoeat = -1;
-	if (myenv->philocount < 1 || myenv->time_to_die < 0
-		|| myenv->time_to_eat < 0
-		|| myenv->time_to_sleep < 0
+	if (myenv->philocount < 1 || myenv->time_to_die <= 0
+		|| myenv->time_to_eat <= 0
+		|| myenv->time_to_sleep <= 0
 		|| ((myenv->max_timestoeat <= 0) && argc == 6))
 		return (1);
 	return (0);
@@ -89,7 +70,7 @@ void	*handler(void *arg)
 	while (1)
 	{
 		if (someone_died(ph))
-			break;
+			break ;
 		take_forks(ph);
 		eat(ph);
 		sleeping(ph);

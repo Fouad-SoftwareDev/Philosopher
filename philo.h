@@ -55,6 +55,7 @@ int					init_threadsallthreads(t_myenv *env);
 int					check_philosopher(t_philo *ph);
 int					check_eatcount(t_myenv *env);
 int					someone_died(t_philo *ph);
+int					onlynumber(char *s);
 void				*handler(void *arg);
 void				*handler1(void *arg);
 void				monitor_death(t_myenv *env);

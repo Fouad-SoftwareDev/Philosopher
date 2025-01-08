@@ -19,7 +19,7 @@ int	check_eatcount(t_myenv *env)
 
 	i = 0;
 	eat_stop = 1;
-	if ( env->max_timestoeat < 0)
+	if (env->max_timestoeat < 0)
 		return (0);
 	while (i < env->philocount)
 	{
@@ -67,4 +67,10 @@ void	join_all_thread(t_myenv *env)
 		i++;
 	}
 	clean_memory(env);
+}
+
+void	sleeping(t_philo *philo)
+{
+	custom_print(" is sleeping", philo);
+	usleep((philo->env->time_to_sleep) * 1000);
 }

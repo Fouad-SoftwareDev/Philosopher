@@ -1,4 +1,4 @@
-SRC = init.c philo_utils.c philo.c philo_utils2.c philo_utils3.c
+SRC = init.c philo_utils.c philo.c philo_utils2.c philo_utils3.c philo_utils4.c
 
 NAME = philo
 FLAGS = -Wextra -Werror -Wall -pthread
