@@ -47,7 +47,7 @@ int	onlynumber(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!((s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z')))
+		if (!(s[i] >= '0' && s[i] <= '9'))
 			return (1);
 		i++;
 	}
