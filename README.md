@@ -44,15 +44,6 @@ Philosophers alternate between:
 - Allowed functions: `memset`, `printf`, `malloc`, `free`, `write`, `usleep`, `gettimeofday`, `pthread_create`, `pthread_detach`, `pthread_join`, `pthread_mutex_*`.
 - Logs must be synchronized and include timestamps in milliseconds.
 
-## Project Structure
-
-```
-├── Makefile            # Build instructions
-├── philosophers.c      # Main logic
-├── philosopher.h       # Header file
-├── README.md           # Documentation
-```
-
 ## Acknowledgments
 
 Project from the **42 School** curriculum showcasing advanced multi-threading concepts.
