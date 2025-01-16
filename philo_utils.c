@@ -40,7 +40,7 @@ int	check_arg_validity(char	**argv, int argc, t_myenv *myenv)
 	int	i;
 
 	i = 1;
-	while (i <= 6)
+	while (i <= argc - 1)
 	{
 		if (onlynumber(argv[i]) == 1)
 			return (1);
